@@ -4,9 +4,9 @@ import ISO6391 from 'iso-639-1'
 const defaultLang = 'en'
 const langRegExp = /\[\[([a-z]{2})\]\]([^\[]+)/g
 const isStorageEnabled = ! (typeof localStorage == 'undefined')
+const textDict = []
 let userLang = (navigator.userLanguage||navigator.browserLanguage||navigator.language||defaultLang).substr(0,2)
-let documentLang = new Set()
-let documentLangIter
+let documentLang
 
 function getLangParam() {
    const arr = /lang=([a-z]{2})/g.exec(location.search)
@@ -40,17 +40,14 @@ function applyLang() {
 
 function textNodesUnder(el) {
   let node
- const nodes = []
- const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false)
- 
- while (node=walk.nextNode()) {
-     nodes.push(node)
- }
- 
- return nodes
-}
+  const nodes = []
+  const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null, false)
 
-const textDict = []
+  while (node=walk.nextNode()) {
+    nodes.push(node)
+  }
+  return nodes
+}
 
 // https://medium.com/@roxeteer/javascript-one-liner-to-get-elements-text-content-without-its-child-nodes-8e59269d1e71
 function parentElTextOnly(el) {
@@ -60,6 +57,7 @@ function parentElTextOnly(el) {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+  let langs = new Set()
   userLang = getLangParam() || getLangFromStorage() || userLang
   if(isStorageEnabled) {
     localStorage.setItem('lang', userLang);
@@ -76,7 +74,7 @@ window.addEventListener('DOMContentLoaded', () => {
     let arr
     while((arr = langRegExp.exec(parentElTextOnly(node.parentElement))) != null) {
       dict[arr[1]] = arr[2]
-      documentLang.add(arr[1])
+      langs.add(arr[1])
     }
     textDict.push({
       el: node.parentElement,
@@ -84,10 +82,9 @@ window.addEventListener('DOMContentLoaded', () => {
     })
   })
   console.log('[wm] documentLang:', documentLang)
-  documentLangIter = documentLang[Symbol.iterator]()
+  documentLang = DocumentLang(langs)
   applyLang()
 });
-
 
 /////////////////////////
 
@@ -104,21 +101,44 @@ window.addEventListener('DOMContentLoaded', () => {
 
 ///////////////////////////
 
+function DocumentLang(langsSet) {
+  let cur = 0
+  const langs = Array.from(langsSet)
+  const next = () => {
+    if (cur <= langs.length - 1) {
+      return langs[cur++]
+    } else {
+      cur = 0
+      return langs[0]
+    }
+  }
+  const nextVal = () => {
+    if (cur + 1 <= langs.length - 1) {
+      return langs[cur + 1]
+    } else { 
+      return langs[0]
+    }
+  }
+
+  return {
+    next,
+    nextVal,
+  }
+}
+
 window.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('[data-wm-switch]').forEach((el) => {
     el.addEventListener('click', (evt) => {
       evt.stopPropagation()
       evt.preventDefault()
-      let nextLang = documentLangIter.next().value
+      let nextLang = documentLang.next()
       if (nextLang === userLang) {
-        nextLang = documentLangIter.next().value
-      }
-      if (!nextLang) {
-        documentLangIter = documentLang[Symbol.iterator]()
-        nextLang = documentLangIter.next().value
+        nextLang = documentLang.next()
       }
       setLang(nextLang)
+      el.textContent = ISO6391.getName(documentLang.nextVal())
       console.log('[wm] switch:', nextLang)
     })
   })
 })
+
