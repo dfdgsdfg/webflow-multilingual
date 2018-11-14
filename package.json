@@ -1,0 +1,42 @@
+{
+  "name": "webflow-multilingual",
+  "version": "0.0.1",
+  "description": "webflow multilingual library",
+  "main": "webflow-multilingual.js",
+  "scripts": {
+    "start": "npm run dev",
+    "dev": "npm run build:dev",
+    "prettier": "prettier ./src",
+    "precommit": "pretty-quick --staged",
+    "build": "npm run build:prod",
+    "build:dev": "rollup -c rollup.config.dev.js --watch",
+    "build:prod": "rollup -c rollup.config.prod.js"
+  },
+  "keywords": [
+    "webflow",
+    "i18n",
+    "l10n",
+    "multilingual"
+  ],
+  "author": "dfdgsdfg",
+  "license": "ISC",
+  "devDependencies": {
+    "husky": "^1.1.4",
+    "prettier": "1.15.2",
+    "pretty-quick": "^1.8.0",
+    "rollup": "^0.67.1",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-livereload": "^0.6.0",
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-serve": "^0.6.0",
+    "rollup-plugin-terser": "^3.0.0"
+  },
+  "dependencies": {
+    "iso-639-1": "^2.0.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  }
+}
