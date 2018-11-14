@@ -82,7 +82,7 @@ window.addEventListener('DOMContentLoaded', () => {
     })
   })
   console.log('[wm] documentLang:', documentLang)
-  documentLang = DocumentLang(langs)
+  documentLang = DocumentLang(langs, userLang)
   applyLang()
 });
 
@@ -101,9 +101,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
 ///////////////////////////
 
-function DocumentLang(langsSet) {
-  let cur = 0
+function DocumentLang(langsSet, userLang) {
   const langs = Array.from(langsSet)
+  let cur = langs.indexOf(userLang)
   const next = () => {
     if (cur <= langs.length - 1) {
       return langs[cur++]
@@ -119,15 +119,23 @@ function DocumentLang(langsSet) {
       return langs[0]
     }
   }
+  const curVal = () => langs[cur]
 
   return {
     next,
     nextVal,
+    curVal
   }
 }
 
 window.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('[data-wm-switch]').forEach((el) => {
+    if (documentLang.curVal() === userLang) {
+      el.textContent = ISO6391.getName(documentLang.nextVal())
+    } else {
+      el.textContent = ISO6391.getName(documentLang.curVal())
+    }
+
     el.addEventListener('click', (evt) => {
       evt.stopPropagation()
       evt.preventDefault()
