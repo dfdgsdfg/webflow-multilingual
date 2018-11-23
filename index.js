@@ -120,7 +120,7 @@ function DocumentLang(langsSet, userLang) {
   const langs = Array.from(langsSet);
   let cur = langs.indexOf(userLang);
   const next = () => {
-    if (cur <= langs.length - 1) {
+    if (cur < langs.length) {
       return langs[cur++];
     } else {
       cur = 0;
@@ -128,7 +128,7 @@ function DocumentLang(langsSet, userLang) {
     }
   };
   const nextVal = () => {
-    if (cur + 1 <= langs.length - 1) {
+    if (cur + 1 < langs.length) {
       return langs[cur + 1];
     } else {
       return langs[0];
