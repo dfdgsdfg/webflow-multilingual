@@ -13,6 +13,14 @@
     );
   }
 
+  var _core = createCommonjsModule(function(module) {
+    var core = (module.exports = {
+      version: "2.5.7"
+    });
+    if (typeof __e == "number") __e = core; // eslint-disable-line no-undef
+  });
+  var _core_1 = _core.version;
+
   var _global = createCommonjsModule(function(module) {
     // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
     var global = (module.exports =
@@ -24,12 +32,19 @@
     if (typeof __g == "number") __g = global; // eslint-disable-line no-undef
   });
 
-  var SHARED = "__core-js_shared__";
-  var store = _global[SHARED] || (_global[SHARED] = {});
+  var _library = false;
 
-  var _shared = function(key) {
-    return store[key] || (store[key] = {});
-  };
+  var _shared = createCommonjsModule(function(module) {
+    var SHARED = "__core-js_shared__";
+    var store = _global[SHARED] || (_global[SHARED] = {});
+    (module.exports = function(key, value) {
+      return store[key] || (store[key] = value !== undefined ? value : {});
+    })("versions", []).push({
+      version: _core.version,
+      mode: "global",
+      copyright: "© 2018 Denis Pushkarev (zloirock.ru)"
+    });
+  });
 
   var id = 0;
   var px = Math.random();
@@ -222,16 +237,6 @@
   var _toIobject = function(it) {
     return _iobject(_defined(it));
   };
-
-  var _library = false;
-
-  var _core = createCommonjsModule(function(module) {
-    var core = (module.exports = {
-      version: "2.5.1"
-    });
-    if (typeof __e == "number") __e = core; // eslint-disable-line no-undef
-  });
-  var _core_1 = _core.version;
 
   var hasOwnProperty = {}.hasOwnProperty;
 
@@ -642,7 +647,7 @@
         // Set @@toStringTag to native iterators
         _setToStringTag(IteratorPrototype, TAG, true); // fix for some old engines
 
-        if (!_library && !_has(IteratorPrototype, ITERATOR))
+        if (!_library && typeof IteratorPrototype[ITERATOR] != "function")
           _hide(IteratorPrototype, ITERATOR, returnThis);
       }
     } // fix Array#{values, @@iterator}.name in V8 / FF
