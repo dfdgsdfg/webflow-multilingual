@@ -18,11 +18,14 @@ export default {
       sourcemap: true
     }
   ],
+  watch: {
+    chokidar: true,
+    exclude: "node_modules/**"
+  },
   plugins: [
     resolve({
-      jsnext: true,
-      main: true,
-      browser: true
+      // FIXME: https://github.com/rollup/rollup-plugin-node-resolve/issues/196
+      preferBuiltins: false
     }),
     commonjs({ include: "node_modules/**" }),
     serve(),

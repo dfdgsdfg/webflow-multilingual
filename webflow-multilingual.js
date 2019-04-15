@@ -8,13 +8,9 @@
   e = l.getElementsByTagName(i)[0];
   e.parentNode.insertBefore(v, e);
 })(document, "script");
-(function(global, factory) {
-  typeof exports === "object" && typeof module !== "undefined"
-    ? factory()
-    : typeof define === "function" && define.amd
-    ? define(factory)
-    : factory();
-})(this, function() {
+(function(factory) {
+  typeof define === "function" && define.amd ? define(factory) : factory();
+})(function() {
   "use strict";
 
   const LANGUAGES_LIST = {
@@ -164,7 +160,7 @@
     },
     el: {
       name: "Greek",
-      nativeName: "ελληνικά"
+      nativeName: "Ελληνικά"
     },
     en: {
       name: "English",
@@ -556,7 +552,7 @@
     },
     ro: {
       name: "Romanian",
-      nativeName: "limba română"
+      nativeName: "Română"
     },
     ru: {
       name: "Russian",
