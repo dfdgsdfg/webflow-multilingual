@@ -22,11 +22,7 @@
   "author": "dfdgsdfg",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.4.3",
-    "@babel/plugin-transform-modules-commonjs": "^7.4.3",
-    "@babel/preset-env": "^7.4.3",
     "chokidar": "^2.1.5",
-    "core-js": "^3.0.1",
     "husky": "^1.3.1",
     "jest": "^24.7.1",
     "prettier": "^1.17.0",
