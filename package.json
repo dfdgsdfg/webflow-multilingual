@@ -9,9 +9,9 @@
     "prettier": "prettier index.js --write",
     "precommit": "pretty-quick --staged",
     "build": "npm run build:prod",
-    "build:dev": "rollup -c rollup.config.dev.js --watch",
-    "build:prod": "rollup -c rollup.config.prod.js",
-    "test": "jest"
+    "build:dev": "BABEL_ENV=build rollup -c rollup.config.dev.js --watch",
+    "build:prod": "BABEL_ENV=build rollup -c rollup.config.prod.js",
+    "test": "BABEL_ENV=test jest"
   },
   "keywords": [
     "webflow",
@@ -23,7 +23,6 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.4.3",
-    "@babel/plugin-transform-modules-commonjs": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
     "chokidar": "^2.1.5",
     "core-js": "^3.0.1",
@@ -32,6 +31,7 @@
     "prettier": "^1.17.0",
     "pretty-quick": "^1.10.0",
     "rollup": "^1.10.0",
+    "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^9.3.4",
     "rollup-plugin-livereload": "^1.0.0",
     "rollup-plugin-node-resolve": "^4.2.3",
@@ -39,8 +39,7 @@
     "rollup-plugin-terser": "^4.0.4"
   },
   "dependencies": {
-    "iso-639-1": "^2.0.5",
-    "rollup-plugin-babel": "^4.3.2"
+    "iso-639-1": "^2.0.5"
   },
   "husky": {
     "hooks": {
