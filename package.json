@@ -39,7 +39,8 @@
     "rollup-plugin-terser": "^4.0.4"
   },
   "dependencies": {
-    "iso-639-1": "^2.0.5"
+    "iso-639-1": "^2.0.5",
+    "rollup-plugin-babel": "^4.3.2"
   },
   "husky": {
     "hooks": {
