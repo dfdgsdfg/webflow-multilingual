@@ -15,7 +15,7 @@ test("btn-lang works", () => {
   console.log(window.defaultLang);
   const btnKo = document.querySelector("#btnKo");
   const btnEn = document.querySelector("#btnEn");
-  const btnSwitch = document.querySelector("#btnSwitch");
+  // const btnSwitch = document.querySelector("#btnSwitch");
 
   btnEn.click();
   btnKo.click();
