@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 test("btn-lang works", () => {
   document.body.innerHTML = `
     <p class="wm-ko">한국어</p>
