@@ -1,6 +1,6 @@
 {
   "name": "webflow-multilingual",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "webflow multilingual library",
   "main": "webflow-multilingual.js",
   "scripts": {
@@ -11,7 +11,8 @@
     "build": "npm run build:prod",
     "build:dev": "BABEL_ENV=build rollup -c rollup.config.dev.js --watch",
     "build:prod": "BABEL_ENV=build rollup -c rollup.config.prod.js",
-    "test": "BABEL_ENV=test jest"
+    "test": "BABEL_ENV=test jest",
+    "prepare": "husky install"
   },
   "keywords": [
     "webflow",
@@ -24,26 +25,21 @@
   "devDependencies": {
     "@babel/core": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
-    "chokidar": "^2.1.6",
+    "chokidar": "^3.5.2",
     "core-js": "^3.0.1",
-    "husky": "^2.3.0",
-    "jest": "^24.8.0",
-    "prettier": "^1.17.1",
-    "pretty-quick": "^1.10.0",
-    "rollup": "^1.12.1",
+    "husky": "^7.0.0",
+    "jest": "^27.3.1",
+    "prettier": "^2.4.0",
+    "pretty-quick": "^3.1.0",
+    "rollup": "^2.58.0",
     "rollup-plugin-babel": "^4.3.2",
     "rollup-plugin-commonjs": "^10.0.0",
-    "rollup-plugin-livereload": "^1.0.0",
+    "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-node-resolve": "^5.0.0",
     "rollup-plugin-serve": "^1.0.1",
-    "rollup-plugin-terser": "^4.0.4"
+    "rollup-plugin-terser": "^7.0.2"
   },
   "dependencies": {
     "iso-639-1": "^2.0.5"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
   }
 }

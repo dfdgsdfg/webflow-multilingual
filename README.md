@@ -1,4 +1,4 @@
-https://img.shields.io/npm/v/webflow-multilingual.svg
+![](https://img.shields.io/npm/v/webflow-multilingual.svg)
 
 # Webflow Multilingual
 
