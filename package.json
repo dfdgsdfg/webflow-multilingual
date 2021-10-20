@@ -1,6 +1,6 @@
 {
   "name": "webflow-multilingual",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "webflow multilingual library",
   "main": "webflow-multilingual.js",
   "scripts": {
