@@ -22,7 +22,7 @@ function getLangFromStorage() {
   return isStorageEnabled ? localStorage.getItem("lang") : undefined;
 }
 
-function setLang(lang) {
+export function setLang(lang) {
   userLang = lang;
   if (isStorageEnabled) {
     localStorage.setItem("lang", userLang);
@@ -31,7 +31,7 @@ function setLang(lang) {
   applyLang();
 }
 
-function applyLang() {
+export function applyLang() {
   textDict.forEach(o => {
     o.el.textContent = o.dict[userLang];
   });
@@ -65,7 +65,9 @@ function parentElTextOnly(el) {
   }, "");
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", init); 
+
+export function init() {
   let langs = new Set();
   userLang = getLangParam() || getLangFromStorage() || userLang;
   if (isStorageEnabled) {
@@ -99,11 +101,13 @@ window.addEventListener("DOMContentLoaded", () => {
   console.log("[wm] documentLang:", documentLang);
   documentLang = DocumentLang(langs, userLang);
   applyLang();
-});
+}
 
 /////////////////////////
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", addSelectLangButtonEvent);
+
+export function addSelectLangButtonEvent() {
   document.querySelectorAll("[data-wm-sel]").forEach(el => {
     el.addEventListener("click", evt => {
       evt.stopPropagation();
@@ -112,11 +116,11 @@ window.addEventListener("DOMContentLoaded", () => {
       setLang(el.dataset.wmSel);
     });
   });
-});
+}
 
 ///////////////////////////
 
-function DocumentLang(langsSet, userLang) {
+export function DocumentLang(langsSet, userLang) {
   const langs = Array.from(langsSet);
   let cur = langs.indexOf(userLang);
   const next = () => {
@@ -143,7 +147,9 @@ function DocumentLang(langsSet, userLang) {
   };
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", addSwitchLangButtonEvent);
+
+export function addSwitchLangButtonEvent() {
   document.querySelectorAll("[data-wm-switch]").forEach(el => {
     if (documentLang.curVal() === userLang) {
       el.textContent = ISO6391.getName(documentLang.nextVal());
@@ -163,4 +169,4 @@ window.addEventListener("DOMContentLoaded", () => {
       console.log("[wm] switch:", nextLang);
     });
   });
-});
+}

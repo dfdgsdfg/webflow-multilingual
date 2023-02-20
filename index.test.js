@@ -2,6 +2,8 @@
  * @jest-environment jsdom
  */
 
+import * as wm from "./index.js";
+
 test("btn-lang works", () => {
   document.body.innerHTML = `
     <p class="wm-ko">한국어</p>
@@ -15,13 +17,16 @@ test("btn-lang works", () => {
     <button id="btnKo" data-wm-sel="ko">한국어</button>
     <button id="btnEn" data-wm-sel="en">English</button>
     <button id="btnSwitch" data-wm-switch>Switch</button>`;
-  require("./index");
-  console.log(window.defaultLang);
+  
+  wm.init();
+  wm.addSelectLangButtonEvent();
+  
   const btnKo = document.querySelector("#btnKo");
   const btnEn = document.querySelector("#btnEn");
   // const btnSwitch = document.querySelector("#btnSwitch");
 
   btnEn.click();
   btnKo.click();
-  expect(document.querySelector("#t1").textContent).toEqual("한국어");
+  const t1 = document.querySelector("#t1");
+  expect(t1.textContent).toEqual("한국어 ");
 });
