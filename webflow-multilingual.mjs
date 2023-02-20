@@ -1,3 +1,5 @@
+
+(function(l, r) { if (!l || l.getElementById('livereloadscript')) return; r = l.createElement('script'); r.async = 1; r.src = '//' + (self.location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1'; r.id = 'livereloadscript'; l.getElementsByTagName('head')[0].appendChild(r) })(self.document);
 const LANGUAGES_LIST = {
   aa: {
     name: 'Afar',
@@ -845,7 +847,40 @@ function parentElTextOnly(el) {
   }, "");
 }
 
-window.addEventListener("DOMContentLoaded", init); 
+function DocumentLang(langsSet, userLang) {
+  const langs = Array.from(langsSet);
+  let cur = langs.indexOf(userLang);
+  const next = () => {
+    if (cur < langs.length) {
+      return langs[cur++];
+    } else {
+      cur = 0;
+      return langs[0];
+    }
+  };
+  const nextVal = () => {
+    if (cur + 1 < langs.length) {
+      return langs[cur + 1];
+    } else {
+      return langs[0];
+    }
+  };
+  const curVal = () => langs[cur];
+
+  return {
+    next,
+    nextVal,
+    curVal
+  };
+}
+
+/////////////////////////////////////////
+
+window.addEventListener("DOMContentLoaded", () => {
+  init();
+  addSelectLangButtonEvent();
+  addSwitchLangButtonEvent();
+}); 
 
 function init() {
   let langs = new Set();
@@ -883,10 +918,6 @@ function init() {
   applyLang();
 }
 
-/////////////////////////
-
-window.addEventListener("DOMContentLoaded", addSelectLangButtonEvent);
-
 function addSelectLangButtonEvent() {
   document.querySelectorAll("[data-wm-sel]").forEach(el => {
     el.addEventListener("click", evt => {
@@ -897,37 +928,6 @@ function addSelectLangButtonEvent() {
     });
   });
 }
-
-///////////////////////////
-
-function DocumentLang(langsSet, userLang) {
-  const langs = Array.from(langsSet);
-  let cur = langs.indexOf(userLang);
-  const next = () => {
-    if (cur < langs.length) {
-      return langs[cur++];
-    } else {
-      cur = 0;
-      return langs[0];
-    }
-  };
-  const nextVal = () => {
-    if (cur + 1 < langs.length) {
-      return langs[cur + 1];
-    } else {
-      return langs[0];
-    }
-  };
-  const curVal = () => langs[cur];
-
-  return {
-    next,
-    nextVal,
-    curVal
-  };
-}
-
-window.addEventListener("DOMContentLoaded", addSwitchLangButtonEvent);
 
 function addSwitchLangButtonEvent() {
   document.querySelectorAll("[data-wm-switch]").forEach(el => {
@@ -951,4 +951,5 @@ function addSwitchLangButtonEvent() {
   });
 }
 
-export { DocumentLang, addSelectLangButtonEvent, addSwitchLangButtonEvent, applyLang, init, setLang };
+export { addSelectLangButtonEvent, addSwitchLangButtonEvent, init };
+//# sourceMappingURL=webflow-multilingual.mjs.map

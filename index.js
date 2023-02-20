@@ -22,7 +22,7 @@ function getLangFromStorage() {
   return isStorageEnabled ? localStorage.getItem("lang") : undefined;
 }
 
-export function setLang(lang) {
+function setLang(lang) {
   userLang = lang;
   if (isStorageEnabled) {
     localStorage.setItem("lang", userLang);
@@ -31,7 +31,7 @@ export function setLang(lang) {
   applyLang();
 }
 
-export function applyLang() {
+function applyLang() {
   textDict.forEach(o => {
     o.el.textContent = o.dict[userLang];
   });
@@ -65,7 +65,40 @@ function parentElTextOnly(el) {
   }, "");
 }
 
-window.addEventListener("DOMContentLoaded", init); 
+function DocumentLang(langsSet, userLang) {
+  const langs = Array.from(langsSet);
+  let cur = langs.indexOf(userLang);
+  const next = () => {
+    if (cur < langs.length) {
+      return langs[cur++];
+    } else {
+      cur = 0;
+      return langs[0];
+    }
+  };
+  const nextVal = () => {
+    if (cur + 1 < langs.length) {
+      return langs[cur + 1];
+    } else {
+      return langs[0];
+    }
+  };
+  const curVal = () => langs[cur];
+
+  return {
+    next,
+    nextVal,
+    curVal
+  };
+}
+
+/////////////////////////////////////////
+
+window.addEventListener("DOMContentLoaded", () => {
+  init();
+  addSelectLangButtonEvent();
+  addSwitchLangButtonEvent();
+}); 
 
 export function init() {
   let langs = new Set();
@@ -103,10 +136,6 @@ export function init() {
   applyLang();
 }
 
-/////////////////////////
-
-window.addEventListener("DOMContentLoaded", addSelectLangButtonEvent);
-
 export function addSelectLangButtonEvent() {
   document.querySelectorAll("[data-wm-sel]").forEach(el => {
     el.addEventListener("click", evt => {
@@ -117,37 +146,6 @@ export function addSelectLangButtonEvent() {
     });
   });
 }
-
-///////////////////////////
-
-export function DocumentLang(langsSet, userLang) {
-  const langs = Array.from(langsSet);
-  let cur = langs.indexOf(userLang);
-  const next = () => {
-    if (cur < langs.length) {
-      return langs[cur++];
-    } else {
-      cur = 0;
-      return langs[0];
-    }
-  };
-  const nextVal = () => {
-    if (cur + 1 < langs.length) {
-      return langs[cur + 1];
-    } else {
-      return langs[0];
-    }
-  };
-  const curVal = () => langs[cur];
-
-  return {
-    next,
-    nextVal,
-    curVal
-  };
-}
-
-window.addEventListener("DOMContentLoaded", addSwitchLangButtonEvent);
 
 export function addSwitchLangButtonEvent() {
   document.querySelectorAll("[data-wm-switch]").forEach(el => {
