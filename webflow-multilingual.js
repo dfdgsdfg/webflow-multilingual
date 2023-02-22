@@ -875,6 +875,7 @@
   function init() {
     let langs = new Set();
     userLang = getLangParam() || getLangFromStorage() || userLang;
+    console.log("[wm] userLang:", userLang);
     if (isStorageEnabled) {
       localStorage.setItem("lang", userLang);
     }
@@ -897,8 +898,8 @@
         dict
       });
     });
-    console.log("[wm] documentLang:", documentLang);
     documentLang = DocumentLang(langs, userLang);
+    console.log("[wm] documentLang:", documentLang.curVal());
     applyLang();
   }
 
